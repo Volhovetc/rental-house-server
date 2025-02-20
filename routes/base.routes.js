@@ -8,8 +8,8 @@ const jwt = require("jsonwebtoken");
 router.post("/data", async (req, res) => {
   try {
     console.log(req.header("Authorization"));
-    // const token = req.header("Authorization").substring(7, authHeader.length);
-    // console.log(token);
+    const token = req.header("Authorization").substring(7);
+    console.log(token);
     // if (!token)
     //   return res
     //     .status(401)
