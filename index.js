@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const jwt = require("jsonwebtoken");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

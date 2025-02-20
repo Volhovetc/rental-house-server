@@ -16,29 +16,28 @@ router.post("/data", async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log(decoded);
-    // if (!decoded.userId)
-    //   return res
-    //     .status(401)
-    //     .json({ type: "error", value: "Авторизация не пройдена" });
+    if (!decoded.userId)
+      return res
+        .status(401)
+        .json({ type: "error", value: "Авторизация не пройдена" });
 
-    // const User = await Users.findOne({ _id: decoded.userId });
-    // if (!User)
-    //   return res
-    //     .status(404)
-    //     .json({ type: "error", value: "Пользователь не найден" });
+    const User = await Users.findOne({ _id: decoded.userId });
+    if (!User)
+      return res
+        .status(404)
+        .json({ type: "error", value: "Пользователь не найден" });
 
-    // const { name, surname, lastname, role } = req.body;
-    // console.log(name, surname, lastname, role);
-    // await Users.findOneAndUpdate(
-    //   { _id: decoded.userId },
-    //   {
-    //     ...User._doc,
-    //     name: name,
-    //     surname: surname,
-    //     lastname: lastname,
-    //     role: role,
-    //   }
-    // );
+    const { name, surname, lastname, phoneNumber } = req.body;
+    await Users.findOneAndUpdate(
+      { _id: decoded.userId },
+      {
+        ...User._doc,
+        name: name,
+        surname: surname,
+        lastname: lastname,
+        phoneNumber: phoneNumber,
+      }
+    );
     res.status(200).json({ type: "success", value: "Данные сохранены" });
   } catch (e) {
     return res.status(500).json({ message: e.message });

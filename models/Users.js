@@ -36,6 +36,9 @@ const schema = new Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  phoneNumber: {
+    type: String,
+  },
 });
 
 module.exports = model("Users", schema);
