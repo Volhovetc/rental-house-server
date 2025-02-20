@@ -7,16 +7,15 @@ const jwt = require("jsonwebtoken");
 // /api/base/
 router.post("/data", async (req, res) => {
   try {
-    console.log(req.header("Authorization"));
     const token = req.header("Authorization").substring(7);
     console.log(token);
-    // if (!token)
-    //   return res
-    //     .status(401)
-    //     .json({ type: "error", value: "Авторизация не пройдена" });
+    if (!token)
+      return res
+        .status(401)
+        .json({ type: "error", value: "Авторизация не пройдена" });
 
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
     // if (!decoded.userId)
     //   return res
     //     .status(401)
