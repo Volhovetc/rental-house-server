@@ -127,6 +127,19 @@ class UserController {
       return res.status(500).json({ message: e.message });
     }
   }
+  async users(req, res) {
+    try {
+      const users = await Users.find({});
+      if (!users)
+        return res
+          .status(404)
+          .json({ type: "error", value: "Пользователей нет" });
+
+      res.status(200).json({ type: "success", value: users });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
+  }
 }
 
 module.exports = new UserController();
