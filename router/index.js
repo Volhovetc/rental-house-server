@@ -4,6 +4,7 @@ const router = new Router();
 const { check } = require("express-validator");
 const authMiddleware = require("../middlewares/auth-middleware");
 
+router.get("/validationToken", authMiddleware, userController.validationToken);
 router.post(
   "/signup",
   [check("email", "Некорректный email").isEmail()],

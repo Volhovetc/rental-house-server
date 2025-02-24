@@ -143,6 +143,12 @@ class UserController {
       return res.status(500).json({ message: e.message });
     }
   }
+  async validationToken(req, res, next) {
+    return res.status(200).json({
+      type: "data",
+      value: true,
+    });
+  }
 }
 
 module.exports = new UserController();
