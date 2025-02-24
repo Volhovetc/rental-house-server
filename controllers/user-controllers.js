@@ -135,7 +135,7 @@ class UserController {
           .status(404)
           .json({ type: "error", value: "Пользователей нет" });
 
-      const usersFilter = users.filter((user) => (user.isBrief = true));
+      const usersFilter = users.filter((user) => user.isBrief == true);
       const usersDTO = usersFilter.map((e) => DTO(e));
       res.status(200).json({ type: "success", value: usersDTO });
     } catch (e) {
