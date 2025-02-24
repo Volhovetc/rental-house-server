@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 module.exports = function (req, res, next) {
   try {
-    const authorizationHeader = req.headers.Authorization;
+    const authorizationHeader = req.header("Authorization");
     if (!authorizationHeader)
       return res
         .status(401)
         .json({ type: "error", value: "Авторизация не пройдена" });
-    const accessToken = req.headers.authorization.split(" ")[1];
+    const accessToken = authorizationHeader.split(" ")[1];
     if (!accessToken)
       return res
         .status(401)
