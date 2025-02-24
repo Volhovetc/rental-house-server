@@ -21,8 +21,8 @@ router.get("/data", authMiddleware, async (req, res) => {
 
 module.exports = router;
 
-const DTO = (useser) => {
-  const { name, surname, lastname, phoneNumber, role } = user;
+const DTO = (User) => {
+  const { name, surname, lastname, phoneNumber, role } = User;
   return {
     name: name,
     surname: surname,
