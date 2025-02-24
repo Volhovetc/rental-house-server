@@ -135,7 +135,9 @@ class UserController {
           .status(404)
           .json({ type: "error", value: "Пользователей нет" });
 
-      const usersDTO = users.map((e) => DTO(e));
+      const usersDTO = users.map((e) => {
+        if (e.name) DTO(e);
+      });
       res.status(200).json({ type: "success", value: usersDTO });
     } catch (e) {
       return res.status(500).json({ message: e.message });
