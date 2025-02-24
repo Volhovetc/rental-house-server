@@ -15,6 +15,7 @@ const schema = new Schema({
   },
   isBrief: {
     type: Boolean,
+    default: false,
   },
   created_at: {
     type: String,

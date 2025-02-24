@@ -106,6 +106,7 @@ class UserController {
           surname: surname,
           lastname: lastname,
           phoneNumber: phoneNumber,
+          isBrief: true,
         }
       );
       res.status(200).json({ type: "data", value: { isBrief: true } });
