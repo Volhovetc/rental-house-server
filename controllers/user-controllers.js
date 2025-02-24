@@ -108,7 +108,7 @@ class UserController {
           phoneNumber: phoneNumber,
         }
       );
-      res.status(200).json({ type: "success", value: "Данные сохранены" });
+      res.status(200).json({ type: "data", value: { isBrief: true } });
     } catch (e) {
       return res.status(500).json({ message: e.message });
     }
