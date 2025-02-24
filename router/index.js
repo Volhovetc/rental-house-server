@@ -18,5 +18,6 @@ router.post(
 router.post("/brief", authMiddleware, userController.brief);
 router.get("/profile", authMiddleware, userController.profile);
 router.get("/users", authMiddleware, userController.users);
+router.post("/tasks", authMiddleware, userController.tasks);
 
 module.exports = router;

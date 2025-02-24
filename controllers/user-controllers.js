@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 require("dotenv").config();
 const Users = require("../models/Users");
+const task = require("../models/task");
 const nodemailer = require("nodemailer");
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
@@ -148,6 +149,32 @@ class UserController {
       type: "data",
       value: true,
     });
+  }
+  async tasks(req, res, next) {
+    try {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() });
+      }
+      const { from, to, text } = req.body;
+      let date = new Date();
+      const newTask = new task({
+        from,
+        to,
+        text,
+        created: `${date.getDate()}-${
+          date.getMonth() + 1
+        }-${date.getFullYear()}`,
+      });
+      await newTask.save();
+      return res.status(200).json({
+        type: "data",
+        value: true,
+        text: "задача поставлена",
+      });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
   }
 }
 
