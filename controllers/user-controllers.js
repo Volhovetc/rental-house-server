@@ -67,7 +67,7 @@ class UserController {
         passwordHash.verify(password, candidate.hashedPassword)
       ) {
         const token = jwt.sign(
-          { userId: candidate._doc._id },
+          { userId: candidate._doc._id, role: candidate.role },
           process.env.JWT_SECRET,
           {
             expiresIn: "7d",
@@ -200,6 +200,22 @@ class UserController {
         { done: done, text: text, to: to }
       );
       if (!updateTask)
+        return res
+          .status(404)
+          .json({ type: "error", value: "Задача не найдена" });
+      return res.status(200).json({
+        type: "data",
+        value: true,
+      });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
+  }
+  async deletetask(req, res) {
+    try {
+      const { id } = req.query.id;
+      const deleteTask = await task.findOneAndDelete({ _id: id });
+      if (!deleteTask)
         return res
           .status(404)
           .json({ type: "error", value: "Задача не найдена" });

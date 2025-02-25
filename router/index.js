@@ -3,6 +3,7 @@ const userController = require("../controllers/user-controllers");
 const router = new Router();
 const { check } = require("express-validator");
 const authMiddleware = require("../middlewares/auth-middleware");
+const adminMiddleware = require("../middlewares/admin-middleware");
 
 router.get("/validationToken", authMiddleware, userController.validationToken);
 router.post(
@@ -21,5 +22,11 @@ router.get("/users", authMiddleware, userController.users);
 router.post("/tasks", authMiddleware, userController.addtask);
 router.get("/tasks", authMiddleware, userController.gettasks);
 router.put("/tasks", authMiddleware, userController.updatetask);
+router.delete(
+  "/tasks/:id",
+  authMiddleware,
+  adminMiddleware,
+  userController.deletetask
+);
 
 module.exports = router;
