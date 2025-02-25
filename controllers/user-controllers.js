@@ -195,11 +195,11 @@ class UserController {
   async updatetask(req, res) {
     try {
       const { id, done, text, to } = req.body;
-      const task = await task.findOneAndUpdate(
+      const updateTask = await task.findOneAndUpdate(
         { _id: id },
         { done: done, text: text, to: to }
       );
-      if (!task)
+      if (!updateTask)
         return res
           .status(404)
           .json({ type: "error", value: "Задача не найдена" });
