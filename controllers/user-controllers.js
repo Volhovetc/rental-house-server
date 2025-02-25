@@ -215,6 +215,7 @@ class UserController {
     try {
       const { id } = req.params.id;
       const deleteTask = await task.findOneAndDelete({ _id: id });
+      console.log(deleteTask);
       if (!deleteTask)
         return res
           .status(404)
