@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const userController = require("../controllers/user-controllers");
+const adminController = require("../controllers/admin-controller");
 const router = new Router();
 const { check } = require("express-validator");
 const authMiddleware = require("../middlewares/auth-middleware");
@@ -16,6 +17,7 @@ router.post(
   [check("email", "Некорректный email").isEmail()],
   userController.login
 );
+
 router.post("/brief", authMiddleware, userController.brief);
 router.get("/profile", authMiddleware, userController.profile);
 router.get("/users", authMiddleware, userController.users);
@@ -26,7 +28,6 @@ router.delete(
   "/tasks/:id",
   authMiddleware,
   adminMiddleware,
-  userController.deletetask
+  adminController.deletetask
 );
-
 module.exports = router;

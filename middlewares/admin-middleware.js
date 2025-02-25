@@ -8,6 +8,7 @@ module.exports = function (req, res, next) {
       return res
         .status(403)
         .json({ type: "error", value: "У вас недостаточно прав" });
+
     next();
   } catch (err) {
     res.status(500).json({ type: "error", value: "Ошибка сервера" });

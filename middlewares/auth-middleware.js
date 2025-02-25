@@ -13,6 +13,7 @@ module.exports = function (req, res, next) {
         .json({ type: "error", value: "Авторизация не пройдена" });
     const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
     req.body._id = decodedToken.userId;
+    req.body.role = decodedToken.role;
     next();
   } catch (err) {
     res.status(500).json({ type: "error", value: "Ошибка сервера" });
