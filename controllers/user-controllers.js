@@ -194,8 +194,11 @@ class UserController {
   }
   async updatetask(req, res) {
     try {
-      const { id } = req.body;
-      const task = await task.findOneAndUpdate({ _id: id }, { done: true });
+      const { id, done, text, to } = req.body;
+      const task = await task.findOneAndUpdate(
+        { _id: id },
+        { done: done, text: text, to: to }
+      );
       if (!task)
         return res
           .status(404)
