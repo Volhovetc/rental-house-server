@@ -66,21 +66,42 @@ class UserController {
         candidate &&
         passwordHash.verify(password, candidate.hashedPassword)
       ) {
-        const token = jwt.sign(
+        const accessToken = jwt.sign(
           { userId: candidate._doc._id, role: candidate.role },
           process.env.JWT_SECRET,
-          {
-            expiresIn: "7d",
-          }
+          { expiresIn: "7d" }
         );
+        const refreashToken = jwt.sign(
+          { userId: candidate._doc._id, role: candidate.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "30d" }
+        );
+
         if (!candidate._doc.isVerificated) {
           await Users.findOneAndUpdate(
             { email: email },
-            { ...candidate._doc, isVerificated: true }
+            { isVerificated: true }
           );
         }
+
+        const options = {
+          maxAge: 1000 * 60 * 60 * 24 * 30,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        };
+
+        const tokens = JSON.stringify({
+          accessToken: accessToken,
+          refreashToken: refreashToken,
+        });
+        res.cookie("tokens", tokens, options);
+        await Users.findOneAndUpdate(
+          { email: email },
+          { tokenRefreash: refreashToken }
+        );
         res.status(200).json({
-          value: { token: token, isBrief: candidate.isBrief },
+          value: { token: accessToken, isBrief: candidate.isBrief },
           type: "data",
         });
       } else {

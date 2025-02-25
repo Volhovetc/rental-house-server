@@ -40,6 +40,10 @@ const schema = new Schema({
   phoneNumber: {
     type: String,
   },
+  tokenRefreash: {
+    type: String,
+    default: null,
+  },
 });
 
 module.exports = model("Users", schema);

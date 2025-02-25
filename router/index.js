@@ -5,6 +5,7 @@ const router = new Router();
 const { check } = require("express-validator");
 const authMiddleware = require("../middlewares/auth-middleware");
 const adminMiddleware = require("../middlewares/admin-middleware");
+const refreashTokenMiddleware = require("../middlewares/refreash-token-middleware");
 
 router.get("/validationToken", authMiddleware, userController.validationToken);
 router.post(
@@ -18,7 +19,12 @@ router.post(
   userController.login
 );
 
-router.post("/brief", authMiddleware, userController.brief);
+router.post(
+  "/brief",
+  refreashTokenMiddleware,
+  authMiddleware,
+  userController.brief
+);
 router.get("/profile", authMiddleware, userController.profile);
 router.get("/users", authMiddleware, userController.users);
 router.post("/tasks", authMiddleware, userController.addtask);
