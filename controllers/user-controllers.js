@@ -153,7 +153,7 @@ class UserController {
       }
     );
     return res.status(200).json({
-      value: { token: token, isBrief: candidate.isBrief },
+      value: { token: token },
       type: "data",
     });
   }
