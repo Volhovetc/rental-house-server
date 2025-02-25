@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 module.exports = function (req, res, next) {
   try {
-    const a = JSON.parse(req.cookies);
-    const b = JSON.parse(req.signedCookies);
+    const a = req.cookies;
+    const b = req.signedCookies;
     console.log("Cookies: ", a);
     console.log("Signed Cookies: ", b);
     next();
