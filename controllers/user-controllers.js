@@ -150,12 +150,8 @@ class UserController {
       value: true,
     });
   }
-  async tasks(req, res, next) {
+  async addtask(req, res, next) {
     try {
-      const error = validationResult(req);
-      if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() });
-      }
       const { from, to, text } = req.body;
       let date = new Date();
       const newTask = new task({
@@ -172,6 +168,16 @@ class UserController {
         value: true,
         text: "задача поставлена",
       });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
+  }
+  async gettasks(req, res) {
+    try {
+      const tasks = await task.find({});
+      if (!tasks)
+        return res.status(404).json({ type: "error", value: "Задач нет" });
+      res.status(200).json({ type: "success", value: [...tasks] });
     } catch (e) {
       return res.status(500).json({ message: e.message });
     }
@@ -231,12 +237,13 @@ function customPassword() {
 }
 
 const DTO = (User) => {
-  const { name, surname, lastname, phoneNumber, role } = User;
+  const { name, surname, lastname, phoneNumber, role, _id } = User;
   return {
     name: name,
     surname: surname,
     lastname: lastname,
     phoneNumber: phoneNumber,
     role: role,
+    id: _id,
   };
 };
