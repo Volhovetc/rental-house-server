@@ -96,6 +96,7 @@ class UserController {
           refreashToken: refreashToken,
         });
         res.cookie("tokens", tokens, options);
+        console.log(tokens);
         await Users.findOneAndUpdate(
           { email: email },
           { tokenRefreash: refreashToken }
