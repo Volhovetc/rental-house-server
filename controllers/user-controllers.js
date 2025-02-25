@@ -85,10 +85,12 @@ class UserController {
         }
 
         const options = {
-          maxAge: 1000 * 60 * 60 * 24 * 30,
+          path: "/",
           httpOnly: true,
-          sameSite: "none",
-          secure: true,
+          signed: true,
+          secure: "auto",
+          sameSite: "lax",
+          maxAge: 1000 * 60 * 60 * 24 * 30,
         };
 
         const tokens = JSON.stringify({
