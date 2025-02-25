@@ -182,6 +182,32 @@ class UserController {
       return res.status(500).json({ message: e.message });
     }
   }
+  async gettasks(req, res) {
+    try {
+      const tasks = await task.find({});
+      if (!tasks)
+        return res.status(404).json({ type: "error", value: "Задач нет" });
+      res.status(200).json({ type: "success", value: [...tasks] });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
+  }
+  async updatetask(req, res) {
+    try {
+      const { id } = req.body;
+      const task = await task.findOneAndUpdate({ _id: id }, { done: true });
+      if (!task)
+        return res
+          .status(404)
+          .json({ type: "error", value: "Задача не найдена" });
+      return res.status(200).json({
+        type: "data",
+        value: true,
+      });
+    } catch (e) {
+      return res.status(500).json({ message: e.message });
+    }
+  }
 }
 
 module.exports = new UserController();

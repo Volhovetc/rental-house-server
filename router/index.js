@@ -20,5 +20,6 @@ router.get("/profile", authMiddleware, userController.profile);
 router.get("/users", authMiddleware, userController.users);
 router.post("/tasks", authMiddleware, userController.addtask);
 router.get("/tasks", authMiddleware, userController.gettasks);
+router.put("/tasks", authMiddleware, userController.updatetask);
 
 module.exports = router;
