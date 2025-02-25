@@ -98,15 +98,20 @@ class UserController {
           refreashToken: refreashToken,
         });
         res.cookie("tokens", tokens, options);
+
         console.log(tokens);
         await Users.findOneAndUpdate(
           { email: email },
           { tokenRefreash: refreashToken }
         );
-        res.status(200).json({
+        res.send({
           value: { token: accessToken, isBrief: candidate.isBrief },
           type: "data",
         });
+        // res.status(200).json({
+        //   value: { token: accessToken, isBrief: candidate.isBrief },
+        //   type: "data",
+        // });
       } else {
         res.status(500).json({ type: "error", value: "Неверные данные" });
       }
