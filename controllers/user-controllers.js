@@ -69,9 +69,9 @@ class UserController {
         const accessToken = jwt.sign(
           { userId: candidate._doc._id, role: candidate.role },
           process.env.JWT_SECRET,
-          { expiresIn: "7d" }
+          { expiresIn: "1m" }
         );
-        const refreashToken = jwt.sign(
+        const refreshToken = jwt.sign(
           { userId: candidate._doc._id, role: candidate.role },
           process.env.JWT_SECRET,
           { expiresIn: "30d" }
@@ -87,31 +87,23 @@ class UserController {
         const options = {
           path: "/",
           httpOnly: true,
-          signed: true,
-          secure: "auto",
-          sameSite: "lax",
           maxAge: 1000 * 60 * 60 * 24 * 30,
         };
 
         const tokens = JSON.stringify({
           accessToken: accessToken,
-          refreashToken: refreashToken,
+          refreshToken: refreshToken,
         });
         res.cookie("tokens", tokens, options);
 
-        console.log(tokens);
         await Users.findOneAndUpdate(
           { email: email },
-          { tokenRefreash: refreashToken }
+          { tokenRefresh: refreshToken }
         );
         res.send({
-          value: { token: accessToken, isBrief: candidate.isBrief },
+          value: { isBrief: candidate.isBrief },
           type: "data",
         });
-        // res.status(200).json({
-        //   value: { token: accessToken, isBrief: candidate.isBrief },
-        //   type: "data",
-        // });
       } else {
         res.status(500).json({ type: "error", value: "Неверные данные" });
       }
@@ -139,7 +131,7 @@ class UserController {
           isBrief: true,
         }
       );
-      res.status(200).json({ type: "data", value: { isBrief: true } });
+      res.status(200).json({ type: "data" });
     } catch (e) {
       return res.status(500).json({ message: e.message });
     }
@@ -172,19 +164,6 @@ class UserController {
     } catch (e) {
       return res.status(500).json({ message: e.message });
     }
-  }
-  async validationToken(req, res, next) {
-    const token = jwt.sign(
-      { userId: req.body._id, role: req.body.role },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
-    return res.status(200).json({
-      value: { token: token },
-      type: "data",
-    });
   }
   async addtask(req, res, next) {
     try {

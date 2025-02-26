@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 module.exports = function (req, res, next) {
   try {
-    const accessToken = req.header("Authorization").split(" ")[1];
-    const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
-    const userRole = decodedToken.role;
+    const userRole = req.body.role;
+
     if (userRole !== "admin")
       return res
         .status(403)

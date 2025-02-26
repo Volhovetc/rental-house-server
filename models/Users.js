@@ -40,7 +40,7 @@ const schema = new Schema({
   phoneNumber: {
     type: String,
   },
-  tokenRefreash: {
+  tokenRefresh: {
     type: String,
     default: null,
   },
