@@ -102,6 +102,7 @@ module.exports = async function (req, res, next) {
         .status(401)
         .json({ type: "error", value: "Авторизация не пройдена" });
   } catch (err) {
-    res.status(500).json({ type: "error", value: "err" });
+    console.log(err);
+    res.status(500).json({ type: "error", value: "Ошибка сервера" });
   }
 };
