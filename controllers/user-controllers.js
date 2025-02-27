@@ -85,6 +85,8 @@ class UserController {
         }
 
         const options = {
+          sameSite: "lax",
+          secure: true,
           path: "/",
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 30,
