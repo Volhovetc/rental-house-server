@@ -3,8 +3,7 @@ require("dotenv").config();
 const Users = require("../models/Users");
 module.exports = async function (req, res, next) {
   try {
-    console.log(req.cookies);
-    const tokens = JSON.parse(req.cookies.tokens);
+    const tokens = JSON.parse(req.signedCookies.tokens);
     if (!tokens)
       return res
         .status(401)
