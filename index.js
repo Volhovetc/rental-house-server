@@ -32,7 +32,7 @@ app.use(
     maxAge: 86400,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser("secret"));
 app.options("*", cors({ origin: true, credentials: true }));
 app.use("/api", router);
 
