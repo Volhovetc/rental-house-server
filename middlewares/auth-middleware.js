@@ -81,10 +81,11 @@ module.exports = async function (req, res, next) {
         { expiresIn: "30d" }
       );
       const options = {
-        sameSite: "none",
-        secure: true,
         path: "/",
         httpOnly: true,
+        signed: true,
+        secure: "auto",
+        sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       };
       const tokens = JSON.stringify({

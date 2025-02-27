@@ -85,9 +85,11 @@ class UserController {
         }
 
         const options = {
-          sameSite: "none",
           path: "/",
           httpOnly: true,
+          signed: true,
+          secure: "auto",
+          sameSite: "lax",
           maxAge: 1000 * 60 * 60 * 24 * 30,
         };
 
