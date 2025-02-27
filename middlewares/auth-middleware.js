@@ -81,7 +81,7 @@ module.exports = async function (req, res, next) {
         { expiresIn: "30d" }
       );
       const options = {
-        sameSite: "lax",
+        sameSite: "none",
         secure: true,
         path: "/",
         httpOnly: true,
